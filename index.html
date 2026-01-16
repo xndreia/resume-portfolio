@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andréia Flores dos Santos Bairre — Desenvolvedora Web</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Lilac/Purple Glassmorphism Palette */
+            --lilac-100: #f3e8ff;
+            --lilac-200: #e9d5ff;
+            --lilac-300: #d8b4fe;
+            --lilac-400: #c084fc;
+            --lilac-500: #a855f7;
+            --lilac-600: #9333ea;
+            --purple-700: #7c3aed;
+            --purple-800: #6b21a8;
+            --purple-900: #581c87;
+            
+            /* Accent Colors */
+            --accent-pink: #f472b6;
+            --accent-cyan: #67e8f9;
+            --accent-gold: #fbbf24;
+            
+            /* Backgrounds */
+            --bg-gradient: linear-gradient(135deg, #1e1b4b 0%, #312e81 25%, #4c1d95 50%, #581c87 75%, #701a75 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --glass-shadow: 0 8px 32px rgba(139, 92, 246, 0.3);
+            
+            /* Text */
+            --text-primary: #ffffff;
+            --text-secondary: #f0e6fa;
+            --text-muted: #e2d5ed;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background Orbs */
+        .bg-orbs {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+            animation: float 15s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.6), transparent);
+            top: -100px; left: -100px;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.5), transparent);
+            top: 50%; right: -80px;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(103, 232, 249, 0.4), transparent);
+            bottom: -100px; left: 30%;
+            animation-delay: -10s;
+        }
+
+        .orb-4 {
+            width: 250px; height: 250px;
+            background: radial-gradient(circle, rgba(147, 51, 234, 0.5), transparent);
+            top: 40%; left: 20%;
+            animation-delay: -7s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            25% { transform: translate(30px, -30px) scale(1.05); }
+            50% { transform: translate(-20px, 20px) scale(0.95); }
+            75% { transform: translate(25px, 15px) scale(1.02); }
+        }
+
+        /* Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Header Section */
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 40px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--lilac-400), var(--accent-pink), var(--accent-cyan), var(--lilac-400));
+            background-size: 300% 100%;
+            animation: shimmer 4s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 300% 50%; }
+        }
+
+        /* Photo Container */
+        .photo-container {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .photo-ring {
+            position: absolute;
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--lilac-400), var(--accent-pink), var(--accent-cyan));
+            animation: rotate 6s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .photo {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+            z-index: 1;
+        }
+
+        /* Header Content */
+        .header-content { flex: 1; }
+
+        .role-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 18px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.3), rgba(244, 114, 182, 0.2));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--lilac-200);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+
+        .role-badge::before {
+            content: '💻';
+            font-size: 14px;
+        }
+
+        .name {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--lilac-200) 50%, var(--accent-pink) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .title {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            font-weight: 400;
+        }
+
+        .title span {
+            color: var(--lilac-300);
+            font-weight: 600;
+        }
+
+        .location {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: rgba(168, 85, 247, 0.2);
+            border-color: var(--lilac-400);
+            color: var(--text-primary);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.3);
+        }
+
+        .contact-link svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Section Styling */
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-inner {
+            padding: 30px 35px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--lilac-500), var(--purple-700));
+            border-radius: 14px;
+            font-size: 22px;
+            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.35);
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.5px;
+        }
+
+        /* Summary */
+        .summary-text {
+            font-size: 16px;
+            line-height: 1.9;
+            color: var(--text-secondary);
+        }
+
+        .summary-text strong {
+            color: var(--lilac-300);
+            font-weight: 600;
+        }
+
+        /* Skills Grid */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-category:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--lilac-400);
+            transform: translateY(-2px);
+        }
+
+        .skill-category-title {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--lilac-300);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            padding: 7px 16px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(124, 58, 237, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .skill-tag:hover {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(244, 114, 182, 0.2));
+            color: var(--text-primary);
+        }
+
+        /* Experience Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 35px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--lilac-400), var(--accent-pink), var(--accent-cyan));
+            border-radius: 3px;
+            opacity: 0.6;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -35px;
+            top: 8px;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(135deg, var(--lilac-400), var(--accent-pink));
+            border: 3px solid rgba(30, 27, 75, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
+        }
+
+        .experience-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 22px;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card:hover {
+            background: rgba(168, 85, 247, 0.08);
+            border-color: var(--lilac-400);
+            transform: translateX(5px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .experience-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .experience-company {
+            font-size: 14.5px;
+            color: var(--lilac-300);
+            font-weight: 500;
+        }
+
+        .experience-date {
+            padding: 5px 12px;
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(124, 58, 237, 0.15));
+            border-radius: 8px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--lilac-200);
+        }
+
+        .experience-list {
+            list-style: none;
+        }
+
+        .experience-list li {
+            position: relative;
+            padding-left: 22px;
+            margin-bottom: 8px;
+            font-size: 15.5px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .experience-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--lilac-400);
+            font-size: 12px;
+        }
+
+        /* Education Grid */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .education-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .education-card:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--lilac-400);
+        }
+
+        .education-icon {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .education-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .education-school {
+            font-size: 11px;
+            color: var(--lilac-300);
+            margin-bottom: 2px;
+        }
+
+        .education-status {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        /* Languages */
+        .languages-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .language-item {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .language-item:hover {
+            background: rgba(168, 85, 247, 0.1);
+            border-color: var(--lilac-400);
+        }
+
+        .language-flag {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .language-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .language-level {
+            font-size: 13px;
+            color: var(--lilac-300);
+        }
+
+        /* Highlight Quote */
+        .highlight-card {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(244, 114, 182, 0.1));
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-card::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 25px;
+            font-size: 80px;
+            font-family: Georgia, serif;
+            color: rgba(168, 85, 247, 0.2);
+            line-height: 1;
+        }
+
+        .highlight-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--lilac-200);
+            margin-bottom: 10px;
+        }
+
+        .highlight-text {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            font-style: italic;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+        }
+
+        .footer-text {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .footer-text span {
+            color: var(--lilac-300);
+        }
+
+        /* Print Styles */
+        @media print {
+            * {
+                print-color-adjust: exact !important;
+                -webkit-print-color-adjust: exact !important;
+            }
+            
+            body {
+                background: linear-gradient(135deg, #1e1b4b, #312e81, #4c1d95, #581c87, #701a75) !important;
+            }
+            
+            .bg-orbs {
+                display: none !important;
+            }
+            
+            .glass-card {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: rgba(255, 255, 255, 0.18) !important;
+            }
+
+            /* Protect critical elements from splitting */
+            .section-header, 
+            .section-icon,
+            .role-badge,
+            .timeline-dot {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                -webkit-column-break-inside: avoid;
+            }
+
+            /* Keep header attached to content */
+            .section-header {
+                break-after: avoid;
+                page-break-after: avoid;
+            }
+
+            /* Keep individual item cards intact, but allow list to split */
+            .experience-card,
+            .education-card,
+            .skill-category,
+            .language-item,
+            .highlight-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            
+            .photo-ring {
+                animation: none !important;
+            }
+            
+            .header::before {
+                animation: none !important;
+            }
+            
+            .container {
+                padding: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                padding: 30px;
+            }
+            
+            .contact-links {
+                justify-content: center;
+            }
+            
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .location {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background Orbs -->
+    <div class="bg-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header glass-card">
+            <div class="photo-container">
+                <div class="photo-ring"></div>
+                <img src="C:\Users\SAMSUNG\Downloads\foto1.jpeg" alt="Foto de Andréia Flores" class="photo">
+            </div>
+            <div class="header-content">
+                <div class="role-badge">Desenvolvedora Web</div>
+                <h1 class="name">Andréia Flores dos Santos Bairre</h1>
+                <p class="title">Desenvolvedora Web Júnior · <span>Front-end / Full Stack</span></p>
+                <p class="location">
+                    <svg style="width: 16px; height: 16px; fill: var(--lilac-300); margin-right: 4px;" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Porto Alegre, RS · (51) 980133727
+                </p>
+                <nav class="contact-links">
+                    <a href="https://wa.me/5551980133727" class="contact-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <span>(51) 98013-3727</span>
+                    </a>
+                    <a href="mailto:andreia.flores.980@gmail.com" class="contact-link">
+                        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span>Email</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/andreiaflores/" class="contact-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://github.com/xndreia" class="contact-link" target="_blank">
+                        <svg viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        <span>GitHub</span>
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Summary -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-icon">👤</div>
+                    <h2 class="section-title">Resumo Profissional</h2>
+                </div>
+                <p class="summary-text">
+                    Desenvolvedora Web com <strong>sólida base técnica</strong> em suporte de TI e atendimento ao cliente. Especialista em <strong>resolução de problemas</strong> e comunicação técnica, com foco atual no ecossistema <strong>JavaScript (React/Next.js)</strong> e integrações de APIs com <strong>.NET Core</strong>. Possui experiência prática em transição de carreira, demonstrando alta capacidade de aprendizado e entrega de <strong>soluções funcionais e escaláveis</strong>.
+                </p>
+            </div>
+        </section>
+
+        <!-- Technical Skills -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-icon">🛠️</div>
+                    <h2 class="section-title">Competências Técnicas</h2>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">⚡ Linguagens</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JavaScript (ES6+)</span>
+                            <span class="skill-tag">TypeScript</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">C#</span>
+                            <span class="skill-tag">Java</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">🎨 Front-end</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">React.js</span>
+                            <span class="skill-tag">Next.js</span>
+                            <span class="skill-tag">HTML5</span>
+                            <span class="skill-tag">CSS3</span>
+                            <span class="skill-tag">Tailwind CSS</span>
+                            <span class="skill-tag">Angular</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">⚙️ Back-end</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Node.js</span>
+                            <span class="skill-tag">ASP.NET Core</span>
+                            <span class="skill-tag">Web API</span>
+                            <span class="skill-tag">Django</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">🗄️ Banco de Dados</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">PostgreSQL</span>
+                            <span class="skill-tag">MySQL</span>
+                            <span class="skill-tag">MongoDB</span>
+                            <span class="skill-tag">SQL Server</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3 class="skill-category-title">🚀 DevOps & Ferramentas</h3>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Git</span>
+                            <span class="skill-tag">GitHub</span>
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Azure</span>
+                            <span class="skill-tag">Terraform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-icon">💼</div>
+                    <h2 class="section-title">Experiência Profissional</h2>
+                </div>
+                <div class="timeline">
+                    <article class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="experience-card">
+                            <div class="experience-header">
+                                <div>
+                                    <h3 class="experience-title">Suporte de T.I</h3>
+                                    <p class="experience-company">NeoBank</p>
+                                </div>
+                                <time class="experience-date">08/2024 - 02/2025</time>
+                            </div>
+                            <ul class="experience-list">
+                                <li>Atendimento técnico especializado para resolução de incidentes em ambiente de alta criticidade</li>
+                                <li>Diagnóstico de falhas de software e orientação técnica via acesso remoto, garantindo a continuidade dos serviços</li>
+                                <li>Colaboração com o time técnico para documentação de processos e melhoria da experiência do usuário</li>
+                            </ul>
+                        </div>
+                    </article>
+
+                    <article class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="experience-card">
+                            <div class="experience-header">
+                                <div>
+                                    <h3 class="experience-title">Atendimento ao Cliente</h3>
+                                    <p class="experience-company">Plano Fiscal Brasil</p>
+                                </div>
+                                <time class="experience-date">02/2022 - 07/2024</time>
+                            </div>
+                            <ul class="experience-list">
+                                <li>Desenvolvimento de planilhas de controle e relatórios de métricas, otimizando o fluxo de dados da equipe</li>
+                                <li>Mediação de conflitos e suporte online via canais digitais, mantendo altos índices de satisfação</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-icon">🎓</div>
+                    <h2 class="section-title">Formação e Cursos</h2>
+                </div>
+                <div class="education-grid">
+                    <article class="education-card">
+                        <div class="education-icon">📚</div>
+                        <h3 class="education-name">Análise e Desenvolvimento de Sistemas</h3>
+                        <p class="education-school">Udemy</p>
+                        <p class="education-status">Em curso</p>
+                    </article>
+                    <article class="education-card">
+                        <div class="education-icon">🔷</div>
+                        <h3 class="education-name">Web API ASP.NET Core (.NET 8/9)</h3>
+                        <p class="education-school">Udemy</p>
+                        <p class="education-status">Concluído em 2025</p>
+                    </article>
+                    <article class="education-card">
+                        <div class="education-icon">⚛️</div>
+                        <h3 class="education-name">React JS com TypeScript</h3>
+                        <p class="education-school">Udemy</p>
+                        <p class="education-status">Concluído em 2025</p>
+                    </article>
+                    <article class="education-card">
+                        <div class="education-icon">💻</div>
+                        <h3 class="education-name">Formação Programador Web</h3>
+                        <p class="education-school">Senac Tech</p>
+                        <p class="education-status">Concluído em 2025</p>
+                    </article>
+                    <article class="education-card">
+                        <div class="education-icon">🖥️</div>
+                        <h3 class="education-name">Técnico em Informática</h3>
+                        <p class="education-school">Cedaspy</p>
+                        <p class="education-status">Concluído</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Languages -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="section-header">
+                    <div class="section-icon">🌐</div>
+                    <h2 class="section-title">Idiomas</h2>
+                </div>
+                <div class="languages-container">
+                    <div class="language-item">
+                        <div class="language-flag">🇧🇷</div>
+                        <h3 class="language-name">Português</h3>
+                        <p class="language-level">Nativo</p>
+                    </div>
+                    <div class="language-item">
+                        <div class="language-flag">🇺🇸</div>
+                        <h3 class="language-name">Inglês</h3>
+                        <p class="language-level">B1 (Intermediário) — Leitura técnica e comunicação funcional</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Highlight -->
+        <section class="section glass-card">
+            <div class="section-inner">
+                <div class="highlight-card">
+                    <h3 class="highlight-title">✨ Filosofia Profissional</h3>
+                    <p class="highlight-text">
+                        Desenvolvedora em constante evolução, combinando experiência em suporte técnico com paixão por desenvolvimento web moderno. Focada em criar soluções elegantes e escaláveis utilizando as melhores práticas do ecossistema JavaScript e .NET.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p class="footer-text">Andréia Flores · <span>Desenvolvedora Web Front-end / Full Stack</span></p>
+        </footer>
+    </div>
+</body>
+</html>
